@@ -1,0 +1,120 @@
+<div class="container">
+  <form [formGroup]="userProfileForm"> <!-- Thêm form và gán formGroup -->
+    <div class="row">
+      <div class="col-md-6">
+        <h2 class="product-header">Thông tin</h2>
+        <div class="mb-3">
+          <label for="fullName" class="form-label">Họ và tên</label>
+          <input type="text"
+            formControlName="fullname"
+            placeholder="Họ và tên"
+            class="form-control"
+            id="fullName"
+            name="fullname">
+        </div>
+
+        <div class="mb-3">
+          <label for="addRess" class="form-label">Địa chỉ</label>
+          <input type="text"
+            class="form-control"
+            formControlName="address"
+            placeholder="Địa chỉ"
+            id="addRess"
+            name="address"
+            [class.is-invalid]="userProfileForm.get('address')!.invalid && userProfileForm.get('address')!.touched">
+          <div
+            *ngIf="userProfileForm.get('address')!.invalid && userProfileForm.get('address')!.touched"
+            class="invalid-feedback">
+            Địa chỉ là trường bắt buộc và ít nhất 5 ký tự.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="dateOfBirth" class="form-label">Ngày sinh
+          </label>
+          <input type="date" class="form-control" id="dateOfBirth"
+            formControlName="date_of_birth"
+            name="date_of_birth">
+        </div>
+
+        <div class="mb-3">
+          <label for="googleAccountId" class="form-label">Tài khoản liên kết
+            Google</label>
+          <input type="text"
+            class="form-control"
+            formControlName="google_account_id"
+            placeholder="0"
+            id="googleAccountId"
+            name="google_account_id">
+        </div>
+        <div class="mb-3">
+          <label for="facebookAccountId" class="form-label">Tài khoản liên kết
+            Facebook</label>
+          <input type="text"
+            class="form-control"
+            formControlName="facebook_account_id"
+            placeholder="0"
+            id="facebookAccountId"
+            name="facebook_account_id">
+        </div>
+
+        <div class="mb-3">
+          <label for="passWord" class="form-label">Mật khẩu</label>
+          <input type="password"
+            formControlName="password"
+            class="form-control"
+            placeholder="password"
+            id="passWord"
+            name="password"
+            [class.is-invalid]="userProfileForm.get('password')!.invalid && userProfileForm.get('password')!.touched">
+          <div
+            *ngIf="userProfileForm.get('password')!.invalid && userProfileForm.get('password')!.touched"
+            class="invalid-feedback">
+            <div *ngIf="userProfileForm.get('password')!.errors?.['minlength']">
+              Mật khẩu ít nhất có 6 ký tự.
+            </div>
+            <div
+              *ngIf="userProfileForm.get('password')!.errors?.['whitespace']">
+              Mật khẩu không được chứa khoảng trắng.
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="retypePassword" class="form-label">Nhập lại mật
+            khẩu</label>
+          <input type="password"
+            formControlName="retype_password"
+            class="form-control"
+            id="retypePassword"
+            name="retype_password"
+            placeholder="Nhập lại mật khẩu"
+            [class.is-invalid]="userProfileForm.get('retype_password')!.invalid && userProfileForm.get('retype_password')!.touched">
+          <div
+            *ngIf="userProfileForm.get('retype_password')!.invalid && userProfileForm.get('retype_password')!.touched"
+            class="invalid-feedback">
+            <div
+              *ngIf="userProfileForm.get('retype_password')!.errors?.['minlength']">
+              Mật khẩu ít nhất có 6 ký tự.
+            </div>
+            <div
+              *ngIf="userProfileForm.get('retype_password')!.errors?.['whitespace']">
+              Mật khẩu không được chứa khoảng trắng.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <h2 class="product-order">Hình đại diện</h2>
+
+      </div>
+    </div>
+    <div class="col-md-3 mx-auto">
+      <button
+        class="btn btn-gradient" type="button" (click)="save()">Cập
+        nhật</button>
+    </div>
+  </form>
+
+</div>
+<app-footer></app-footer>

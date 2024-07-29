@@ -1,0 +1,134 @@
+@import '../../styles/shared-style.scss';
+
+.intro-section {
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.square-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  height: 100%; // Hoặc một giá trị cụ thể nếu cần
+  width: 100%; // Hoặc một giá trị cụ thể nếu cần
+  border-radius: 12px;
+}
+
+.product-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; // Giữ nguyên tỉ lệ hình ảnh
+}
+
+.thumbnail-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+}
+
+.thumbnail-item {
+  width: 120px;
+  height: 120px;
+  margin-right: 5px;
+  border-radius: 12px;
+  /* Thêm khoảng cách ngang giữa các ảnh */
+}
+
+.thumbnail-item:last-child {
+  margin-right: 0;
+  /* Xóa khoảng cách ngang ở ảnh cuối cùng */
+}
+
+.thumbnail-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 9px;
+}
+
+.thumbnail-item.active {
+  border: 3px solid $shopapp-tint-color;
+}
+
+.product-details {
+  color: white;
+  padding: 20px;
+}
+
+.product-actions {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 20px;
+}
+
+.product-actions button {
+  margin-right: 10px;
+}
+
+.border-wrapper {
+  border: 1px solid white;
+}
+
+.product-quantity {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 10px;
+}
+
+.product-quantity button {
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.product-quantity input {
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 16px;
+  text-align: center;
+  width: 40px;
+  margin: 0 10px;
+}
+
+.product-quantity input:focus {
+  outline: none;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  // Làm nút lớn hơn
+  width: 50px;
+  height: 50px;
+
+  // Thêm nền màu sắc dễ thấy
+  background-color: rgba(0, 0, 0, 0.5);
+
+  // Đặt các nút ở giữa chiều cao carousel
+  top: 50%;
+  transform: translateY(-50%);
+
+  // Thêm đường viền tròn cho nút
+  border-radius: 50%;
+
+  // Làm biểu tượng bên trong lớn hơn và sáng màu
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    width: 25px;
+    height: 25px;
+    background-size: 100%, 100%;
+  }
+
+  // Thêm hiệu ứng hover cho nút
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+}
+
