@@ -3,6 +3,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../enviroments/environment';
 import { Product } from '../models/product';
+import { InsertProductDTO } from '../dtos/product/insert.product.dto';
+import { UpdateProductDTO } from '../dtos/product/update.product.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -31,5 +33,21 @@ export class ProductService {
     debugger
     const params = new HttpParams().set('ids', productIds.join(','));
     return this.http.get<Product[]>(`${this.apiGetProducts}/by-ids`, { params });
+  }
+
+  insertProduct(insertProductDTO: InsertProductDTO): Observable<any> {
+    // Add a new product
+    return this.http.post(`${this.apiGetProducts}/add`, insertProductDTO);
+  }
+  uploadImages(productId: number, files: File[]): Observable<any> {
+    const formData = new FormData();
+    for (let i = 0; i < files.length; i++) {
+      formData.append('files', files[i]);
+    }
+    // Upload images for the specified product id
+    return this.http.post(`${this.apiGetProducts}/uploads/${productId}`, formData);
+  }
+  updateProduct(productId: number, updatedProduct: UpdateProductDTO): Observable<UpdateProductDTO> {
+    return this.http.put<Product>(`${this.apiGetProducts}/update/${productId}`, updatedProduct);
   }
 }

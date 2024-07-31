@@ -22,5 +22,8 @@ export class ProductImageService {
       .set('limit', limit.toString());
     return this.http.get<ProductImage[]>(this.apiGetProductIMG, { params });
   }
-
+  deleteProductImage(id: number): Observable<any> {
+    debugger
+    return this.http.delete<string>(`${this.apiGetProductIMG}/delete-file/${id}`);
+  }
 }
