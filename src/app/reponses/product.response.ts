@@ -7,7 +7,8 @@ export interface ProductResponse {
   price: number;
   thumbnail: string;
   description: string;
-  nameCategory: string;
+  category_id: number;
   url: string;
+  active: boolean;
   product_images: ProductImage[];
 }

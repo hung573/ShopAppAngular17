@@ -61,7 +61,7 @@ export class HomeComponent implements OnInit {
 
   getProducts(keyword: string, selectedCategoryId: number, page: number, limit: number) {
     debugger
-    this.productService.getProducts(keyword, selectedCategoryId, page, limit).subscribe({
+    this.productService.getProductsIsActive(keyword, selectedCategoryId, page, limit).subscribe({
       next: (response: any) => {
         debugger
         response.items.forEach((product: Product) => {

@@ -25,6 +25,19 @@ export class ProductService {
       .set('limit', limit.toString());
     return this.http.get<Product[]>(this.apiGetProducts, { params });
   }
+
+  getProductsIsActive(keyword: string, categoryId: number,
+    page: number, limit: number
+  ): Observable<Product[]> {
+    debugger;
+    const params = new HttpParams()
+      .set('keyword', keyword)
+      .set('category_id', categoryId)
+      .set('page', page.toString())
+      .set('limit', limit.toString());
+    return this.http.get<Product[]>(`${this.apiGetProducts}/product-home`, { params });
+  }
+
   getDetailProduct(productId: number) {
     return this.http.get(`${environment.apiBaseUrl}/products/${productId}`);
   }
@@ -50,4 +63,10 @@ export class ProductService {
   updateProduct(productId: number, updatedProduct: UpdateProductDTO): Observable<UpdateProductDTO> {
     return this.http.put<Product>(`${this.apiGetProducts}/update/${productId}`, updatedProduct);
   }
+
+  deleteProduct(productId: number): Observable<string> {
+    debugger
+    return this.http.delete<string>(`${this.apiGetProducts}/delete/${productId}`);
+  }
+
 }

@@ -18,11 +18,15 @@ export class UpdateProductDTO {
 
   category_id: number;
 
+  active: boolean;
+
   constructor(data: any) {
     this.name = data.name;
     this.price = data.price;
     this.thumbnail = data.thumbnail;
     this.description = data.description;
     this.category_id = data.category_id;
+
+    this.active = data.acive;
   }
 }

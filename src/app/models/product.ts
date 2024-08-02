@@ -9,5 +9,6 @@ export interface Product {
   description: string;
   category_id: number;
   url: string;
+  active: boolean;
   product_images: ProductImage[];
 }
