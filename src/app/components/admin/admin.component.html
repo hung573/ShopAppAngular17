@@ -1,0 +1,62 @@
+<div class="container-fluid">
+  <header class="header bg-success text-white d-flex justify-content-between">
+    <h1 class="header-title">Dashboard Header</h1>
+    @if (userResponse) {
+    <ng-container>
+      <p>{{userResponse.fullname}}</p>
+    </ng-container>
+    }
+  </header>
+  <div class="row">
+    <nav id="sidebar" class="col-md-2 col-lg-2 d-md-block bg-light sidebar">
+      <div class="position-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/admin/orders']">
+              <i class="fab fa-first-order icon"></i>Orders
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/admin/categories']">
+              <i class="fab fa-canadian-maple-leaf icon"></i>Categories
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/admin/products']">
+              <i class="fab fa-codepen icon"></i>Products
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/admin/product-image']">
+              <i class="fab fa-codepen icon"></i>Products-Image
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/admin/products']">
+              <i class="fab fa-codepen icon"></i>Role
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/admin/users']">
+              <i class="fab fa-codepen icon"></i>User
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/admin/products']">
+              <i class="fab fa-codepen icon"></i>Socical-Account
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="logout()" style="color: #9933CC;">
+              <i class="fa-solid fa-right-from-bracket icon"
+                style="color: #9933CC;"></i>Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="col-md-10 col-lg-10 overflow-auto">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

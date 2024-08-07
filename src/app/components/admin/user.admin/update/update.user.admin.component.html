@@ -1,0 +1,61 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <h3>Update User</h3>
+      <form>
+        <div class="form-group">
+          <label for="full-name">Họ và tên:</label>
+          <input type="text" id="full-name"
+            name="fullname" class="form-control"
+            [(ngModel)]="updateUserDTO.fullname" required>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="address">Địa chỉ:</label>
+          <textarea id="address"
+            name="address" class="form-control"
+            [(ngModel)]="updateUserDTO.address" required></textarea>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="password">Mật khẩu:</label>
+          <input type="password" id="password"
+            name="password" class="form-control"
+            [(ngModel)]="updateUserDTO.password"
+            required>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="dateOfBirth">Ngày sinh:</label>
+          <input type="date" id="dateOfBirth"
+            name="date_of_birth" class="form-control"
+            [(ngModel)]="updateUserDTO.date_of_birth" required>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="category">Category:</label>
+          <select id="category" [(ngModel)]="updateUserDTO.role_id"
+            name="category" class="form-control" required>
+            <!-- Hiển thị danh sách các category -->
+            @for (role of roles; track role.id) {
+            <option [value]="role.id">{{ role.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="active">Active:</label>
+          <select id="active" [(ngModel)]="updateUserDTO.is_active"
+            name="active" class="form-control" required>
+            <!-- Hiển thị danh sách các category -->
+            <option>true</option>
+            <option>false</option>
+          </select>
+        </div>
+
+        <button type="submit" (click)="updateUser()"
+          class="btn btn-primary">Update</button>
+      </form>
+    </div>
+  </div>
+</div>

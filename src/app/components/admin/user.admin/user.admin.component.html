@@ -1,0 +1,93 @@
+<div class="container-fluid">
+  <div class="row mb-3" style="padding-top: 20px;">
+    <div class="col-md-4">
+      <input type="text" class="form-control search-input"
+        placeholder="Tìm tài khoản" name="keyword" [(ngModel)]="keyword"
+        name="keyword">
+    </div>
+    <div class="col-md-4">
+      <button class="btn btn-primary" (click)="searchUsers()">Tìm
+        kiếm</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8 ">
+      <button type="button" class="btn btn-success"
+        style="margin-top:20px ;"
+        (click)="onAddUser()">Thêm mới</button>
+    </div>
+  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Họ và tên</th>
+        <th scope="col">Số điện thoại</th>
+        <th scope="col">Địa chỉ</th>
+        <th scope="col">Ngày sinh</th>
+        <th scope="col">Role</th>
+        <th scope="col">Active</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (user of users; track user.id) {
+      <tr>
+        <th>{{user.id}}</th>
+        <td>{{limitText(user.fullname,30)}}</td>
+        <td>{{user.phone_number}}</td>
+        <td>{{ limitText(user.address, 30)}}</td>
+        <td>{{user.dateOfBirth| date}}</td>
+        <td>{{user.role.name}}</td>
+        <td>{{ user.active ? 'Còn hoạt động' : 'Đã xoá' }}</td>
+        <td><button type="button" class="btn btn-outline-warning"
+            (click)="updateUser(user.id)">Cập
+            nhật</button></td>
+        <td><button type="button"
+            class="btn btn-outline-danger">Xoá</button></td>
+      </tr>
+      }
+    </tbody>
+  </table>
+  <div class="d-flex justify-content-center">
+    <nav aria-label="Page navigation">
+      <ul class="pagination">
+        @if (currentPage > 1) {
+        <li class="page-item">
+          <a class="page-link"
+            (click)="onPageChange(1)">First</a>
+        </li>
+        }
+        @if (currentPage > 1) {
+        <li class="page-item">
+          <a class="page-link"
+            (click)="onPageChange(currentPage - 1)">Previous</a>
+        </li>
+        }
+        @for (page of visiblePages; track page) {
+        <ng-container>
+          <li class="page-item" [ngClass]="{'active': page === currentPage}">
+            <a class="page-link"
+              (click)="onPageChange(page)">
+              {{page}}
+            </a>
+          </li>
+        </ng-container>
+        }
+        @if (currentPage < totalPages) {
+        <li class="page-item">
+          <a class="page-link"
+            (click)="onPageChange(currentPage + 1)">Next</a>
+        </li>
+        }
+        @if (currentPage < totalPages) {
+        <li class="page-item">
+          <a class="page-link"
+            (click)="onPageChange(totalPages)">Last</a>
+        </li>
+        }
+      </ul>
+    </nav>
+  </div>
+</div>

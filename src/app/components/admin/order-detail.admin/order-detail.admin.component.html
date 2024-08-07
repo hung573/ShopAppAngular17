@@ -1,0 +1,76 @@
+<div class="container">
+  <h1>Order Details</h1>
+  <div class="row">
+    <h3>Order Information</h3>
+    <div class="col-md-12" style="display: flex;">
+      <div class="col-md-6">
+        <p><strong>Order ID:</strong> {{ orderResponse.id }}</p>
+        <p><strong>User ID:</strong> {{ orderResponse.user_id }}</p>
+        <p><strong>Full Name:</strong> {{ orderResponse.fullname }}</p>
+        <p><strong>Phone Number:</strong> {{ orderResponse.phone_number }}</p>
+        <p><strong>Email:</strong> {{ orderResponse.email }}</p>
+      </div>
+      <div class="col-md-6">
+        <p><strong>Address:</strong> {{ orderResponse.address }}</p>
+        <p><strong>Note:</strong> {{ orderResponse.note }}</p>
+        <p><strong>Order Date:</strong> {{ orderResponse.order_date | date
+          }}</p>
+        <!-- <p><strong>Shipping Date:</strong> {{ orderResponse.shipping_date | date
+          }}</p> -->
+        <div class="form-group">
+          <label for="statusSelect"><strong
+              style="color: red;">Shipping Date(*):</strong></label>
+          <input type="date" class="form-control" id="shipping_date"
+            [(ngModel)]="orderResponse.shipping_date"
+            name="shipping_date">
+          <label for="statusSelect"><strong
+              style="color: red;">Status(*):</strong></label>
+          <select class="form-control" id="statusSelect"
+            style="width: 150px; color: red"
+            [(ngModel)]="orderResponse.status" name="status">
+            <option value="pending">Pending</option>
+            <option value="processing">Processing</option>
+            <option value="shipped">Shipped</option>
+            <option value="delivered">Delivered</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <h3>Order Details</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (order_detail of orderResponse.order_details; track
+        order_detail.id) {
+        <tr>
+          <td>
+            <div class="product-info">
+              <img [src]="order_detail.product.thumbnail" alt="Product Image"
+                class="product-image">
+              <span class="product-name">{{ order_detail.product.name }}</span>
+            </div>
+          </td>
+          <td>
+            <p>{{order_detail.product.price | number}} VND</p>
+            <td>
+              <p>{{order_detail.number_of_products}}</p>
+            </td>
+            <td>{{ order_detail.total_money | number}} VND</td>
+          </tr>
+          }
+        </tbody>
+      </table>
+      <h4 style="color: red;"><strong>Total Money:</strong> {{
+        orderResponse.total_money | number}}
+        VND</h4>
+      <button class="btn btn-primary col-md-2"
+        (click)="updateOrder(orderResponse.id)">Save</button>
+    </div>
