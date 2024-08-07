@@ -9,7 +9,6 @@ import { ProductService } from '../../service/product.service';
 import { TokenService } from '../../service/token.service';
 
 import { CommonModule } from '@angular/common';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FooterComponent } from '../footer/footer.component';
 import { FormsModule } from '@angular/forms';
 
@@ -20,7 +19,6 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [
     CommonModule,
-    NgbModule,
     FooterComponent,
     FormsModule
   ]
@@ -141,7 +139,8 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  buyNow(): void {
+  buyNow(productId: number): void {
+    this.addToCart(productId);
     this.router.navigate(['/orders']);
   }
 

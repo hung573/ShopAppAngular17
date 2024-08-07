@@ -13,7 +13,6 @@ import { TokenService } from '../../service/token.service';
 import { UserService } from '../../service/user.service';
 
 import { CommonModule } from '@angular/common';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FooterComponent } from '../footer/footer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -24,7 +23,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   standalone: true,
   imports: [
     CommonModule,
-    NgbModule,
     FooterComponent,
     FormsModule,
     ReactiveFormsModule

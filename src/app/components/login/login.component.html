@@ -12,10 +12,11 @@
               [(ngModel)]="phoneNumber"
               (input)="onPhoneNumberChange()">
             <div class="divider-nospace"></div>
-            <p class="text-danger"
-              *ngIf="phoneNumber.length < 6 && loginrForm.form.touched">
+            @if (phoneNumber.length < 6 && loginrForm.form.touched) {
+            <p class="text-danger">
               Số điện thoại chưa đúng định dạng
             </p>
+            }
           </div>
           <div class="mt-5"></div>
           <div class="form-group password-field">
@@ -40,7 +41,8 @@
                   class="form-check-input"
                   id="remember"
                   [(ngModel)]="rememberMe"
-                  (click)="checkRememberMe()">
+                  (click)="checkRememberMe()"
+                  name="rememberMe">
                 <label class="form-check-label text-start" for="remember">
                   Ghi nhớ đăng nhập</label>
               </span>

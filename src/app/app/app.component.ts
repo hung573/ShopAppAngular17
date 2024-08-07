@@ -5,7 +5,6 @@ import { UserService } from '../service/user.service';
 import { UserResponse } from '../reponses/user/user.response';
 
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HeaderComponent } from '../components/header/header.component';
 import { RouterModule } from '@angular/router';
 
@@ -16,7 +15,6 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [
     CommonModule,
-    NgbModule,
     HeaderComponent,
     RouterModule
   ]

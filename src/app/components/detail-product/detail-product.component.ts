@@ -7,7 +7,6 @@ import { CartService } from '../../service/cart.service';
 import { ProductService } from '../../service/product.service';
 
 import { CommonModule } from '@angular/common';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FooterComponent } from '../footer/footer.component';
 
 @Component({
@@ -17,7 +16,6 @@ import { FooterComponent } from '../footer/footer.component';
   standalone: true,
   imports: [
     CommonModule,
-    NgbModule,
     FooterComponent
   ]
 })

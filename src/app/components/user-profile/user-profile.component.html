@@ -22,11 +22,13 @@
             id="addRess"
             name="address"
             [class.is-invalid]="userProfileForm.get('address')!.invalid && userProfileForm.get('address')!.touched">
+          @if (userProfileForm.get('address')!.invalid &&
+          userProfileForm.get('address')!.touched) {
           <div
-            *ngIf="userProfileForm.get('address')!.invalid && userProfileForm.get('address')!.touched"
             class="invalid-feedback">
             Địa chỉ là trường bắt buộc và ít nhất 5 ký tự.
           </div>
+          }
         </div>
 
         <div class="mb-3">
@@ -67,17 +69,23 @@
             id="passWord"
             name="password"
             [class.is-invalid]="userProfileForm.get('password')!.invalid && userProfileForm.get('password')!.touched">
+          @if (userProfileForm.get('password')!.invalid &&
+          userProfileForm.get('password')!.touched) {
           <div
-            *ngIf="userProfileForm.get('password')!.invalid && userProfileForm.get('password')!.touched"
             class="invalid-feedback">
-            <div *ngIf="userProfileForm.get('password')!.errors?.['minlength']">
+            @if (userProfileForm.get('password')!.errors?.['minlength']) {
+            <div>
               Mật khẩu ít nhất có 6 ký tự.
             </div>
-            <div
-              *ngIf="userProfileForm.get('password')!.errors?.['whitespace']">
+            }
+            @if (userProfileForm.get('password')!.errors?.['whitespace']) {
+            <div>
               Mật khẩu không được chứa khoảng trắng.
             </div>
+            }
           </div>
+          }
+
         </div>
 
         <div class="mb-3">
@@ -90,18 +98,24 @@
             name="retype_password"
             placeholder="Nhập lại mật khẩu"
             [class.is-invalid]="userProfileForm.get('retype_password')!.invalid && userProfileForm.get('retype_password')!.touched">
+          @if (userProfileForm.get('retype_password')!.invalid &&
+          userProfileForm.get('retype_password')!.touched) {
           <div
-            *ngIf="userProfileForm.get('retype_password')!.invalid && userProfileForm.get('retype_password')!.touched"
             class="invalid-feedback">
-            <div
-              *ngIf="userProfileForm.get('retype_password')!.errors?.['minlength']">
+            @if (userProfileForm.get('retype_password')!.errors?.['minlength'])
+            {
+            <div>
               Mật khẩu ít nhất có 6 ký tự.
             </div>
-            <div
-              *ngIf="userProfileForm.get('retype_password')!.errors?.['whitespace']">
+            }
+            @if (userProfileForm.get('retype_password')!.errors?.['whitespace'])
+            {
+            <div>
               Mật khẩu không được chứa khoảng trắng.
             </div>
+            }
           </div>
+          }
         </div>
       </div>
       <div class="col-md-6">

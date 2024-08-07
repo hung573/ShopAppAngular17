@@ -36,13 +36,15 @@
             </a>
           </li>
           <li class="nav-item">
-            <ng-container *ngIf="!userResponse">
+            @if (!userResponse) {
+            <ng-container>
               <a class="nav-link" routerLink="/login"
                 [ngClass]="{'active': activeNavItem === 3}"
                 (click)="setActiveNavItem(3)">Đăng nhập</a>
             </ng-container>
-
-            <ng-container *ngIf="userResponse">
+            }
+            @else {
+            <ng-container>
               <ng-container
                 ngbPopover="Tài khoản của tôi,Đơn mua,Đăng xuất"
                 popoverTitle="User Actions"
@@ -66,13 +68,16 @@
                 </ng-template>
               </ng-container>
             </ng-container>
+            }
           </li>
           <li class="nav-item">
-            <ng-container *ngIf="!userResponse">
+            @if (!userResponse) {
+            <ng-container>
               <a class="nav-link" routerLink="/register"
                 [ngClass]="{'active': activeNavItem === 4}"
                 (click)="setActiveNavItem(4)">Đăng ký</a>
             </ng-container>
+            }
           </li>
         </ul>
       </div>

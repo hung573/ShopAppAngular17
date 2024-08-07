@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbPopoverConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbPopoverConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Router, RouterModule } from '@angular/router';
 
 import { CommonModule } from '@angular/common';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserResponse } from '../../reponses/user/user.response';
 import { UserService } from '../../service/user.service';
 import { CartService } from '../../service/cart.service';
@@ -15,8 +14,8 @@ import { TokenService } from '../../service/token.service';
   standalone: true,
   imports: [
     CommonModule,
-    NgbModule,
-    RouterModule
+    RouterModule,
+    NgbModule
   ]
 })
 export class HeaderComponent implements OnInit {

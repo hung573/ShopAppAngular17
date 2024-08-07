@@ -16,11 +16,13 @@
               id="fullname"
               name="fullname"
               [class.is-invalid]="orderForm.get('fullname')!.invalid && orderForm.get('fullname')!.touched">
+            @if (orderForm.get('fullname')!.invalid &&
+            orderForm.get('fullname')!.touched) {
             <div
-              *ngIf="orderForm.get('fullname')!.invalid && orderForm.get('fullname')!.touched"
               class="invalid-feedback">
               Họ và tên là trường bắt buộc.
             </div>
+            }
           </div>
           <div class="row-mb-2 email" style="width: 45%;">
             <label for="email" class="form-label">Email</label>
@@ -30,13 +32,15 @@
               id="email"
               name="email"
               [class.is-invalid]="orderForm.get('email')!.invalid && orderForm.get('email')!.touched">
+            @if (orderForm.get('email')!.invalid &&
+            orderForm.get('email')!.touched) {
             <div
-              *ngIf="orderForm.get('email')!.invalid && orderForm.get('email')!.touched"
               class="invalid-feedback">
               {{ orderForm.get('email')!.hasError('email') ?
               'Email không hợp lệ'
               : 'Email là trường bắt buộc' }}
             </div>
+            }
           </div>
         </div>
         <div class="mb-3" style="display: flex;">
@@ -62,11 +66,13 @@
               id="phone"
               name="phone_number"
               [class.is-invalid]="orderForm.get('phone_number')!.invalid && orderForm.get('phone_number')!.touched">
+            @if (orderForm.get('phone_number')!.invalid &&
+            orderForm.get('phone_number')!.touched) {
             <div
-              *ngIf="orderForm.get('phone_number')!.invalid && orderForm.get('phone_number')!.touched"
               class="invalid-feedback">
               Số điện thoại là trường bắt buộc và ít nhất 6 ký tự.
             </div>
+            }
           </div>
         </div>
       </div>
@@ -82,11 +88,13 @@
             id="shippingAddress"
             name="shipping_address"
             [class.is-invalid]="orderForm.get('shipping_address')!.invalid && orderForm.get('shipping_address')!.touched">
+          @if (orderForm.get('shipping_address')!.invalid &&
+          orderForm.get('shipping_address')!.touched) {
           <div
-            *ngIf="orderForm.get('shipping_address')!.invalid && orderForm.get('shipping_address')!.touched"
             class="invalid-feedback">
             Địa chỉ là trường bắt buộc và ít nhất 5 ký tự.
           </div>
+          }
         </div>
         <div class="mb-3">
           <label for="shippingMethod" class="form-label">Phương thức vận
@@ -127,7 +135,8 @@
             </tr>
           </thead>
           <tbody>
-            <ng-container *ngFor="let item of cartItems">
+            @for (item of cartItems; track $index) {
+            <ng-container>
               <tr>
                 <td>
                   <div class="product-info"
@@ -156,6 +165,7 @@
                     (click)="deItemProduct(item.product.id)"></i></td>
               </tr>
             </ng-container>
+            }
           </tbody>
         </table>
         <div class="text-start mt-3" style="padding-bottom: 50px;">

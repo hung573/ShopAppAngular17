@@ -1,5 +1,6 @@
+import { TokenService } from './token.service';
 import { LoginDTO } from './../dtos/user/login.dto';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
 import { RegisterDTO } from '../dtos/user/register.dto';
@@ -8,6 +9,7 @@ import { HttpUtilService } from './http.util.service';
 import { UserResponse } from '../reponses/user/user.response';
 import { UserUpdateDTO } from '../dtos/user/user.update.dto';
 import { DOCUMENT } from '@angular/common';
+import { UserAdminUpdateDTO } from '../dtos/user/user.admin.update';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +25,7 @@ export class UserService {
     private http: HttpClient,
     private httpUtilService: HttpUtilService,
     @Inject(DOCUMENT) private document: Document,
+    private tokenService: TokenService
   ) {
     this.localStorage = document.defaultView?.localStorage;
   }
@@ -57,6 +60,17 @@ export class UserService {
         })
       }
     );
+  }
+
+  getUserDetailAdmin(userId: number) {
+    return this.http.get(
+      `${this.apiUrlUser}/admin/${userId}`
+    );
+  }
+
+  updateUserAdmin(userId: number, updateUser: UserAdminUpdateDTO): Observable<UserAdminUpdateDTO> {
+    debugger
+    return this.http.put<UserAdminUpdateDTO>(`${this.apiUrlUser}/admin/update/${userId}`, updateUser);
   }
 
   saveUserToLocalStorage(userResponse?: UserResponse) {
@@ -128,6 +142,16 @@ export class UserService {
 
   refreshToken(refreshToken: string) {
 
+  }
+
+  getAllUsers(keyword: string,
+    page: number, limit: number): Observable<UserResponse[]> {
+    debugger;
+    const params = new HttpParams()
+      .set('keyword', keyword)
+      .set('page', page.toString())
+      .set('limit', limit.toString());
+    return this.http.get<UserResponse[]>(this.apiUrlUser, { params });
   }
 
 
