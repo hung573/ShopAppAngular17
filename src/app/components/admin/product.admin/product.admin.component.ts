@@ -30,6 +30,7 @@ export class ProductAdminComponent implements OnInit {
   totalPages: number = 0;
   visiblePages: number[] = [];
   keyword: string = "";
+  activee: number = 0;
 
   constructor(
     private productService: ProductService,
@@ -131,15 +132,24 @@ export class ProductAdminComponent implements OnInit {
     this.router.navigate(['/admin/products/insert']);
   }
 
-  deleteProduct(productId: number) {
+  deleteProduct(productId: number, active: boolean) {
+    let message: String
+    if (active) {
+      this.activee = 0;
+      message = 'Are you sure you want to stop doing business this product?';
+    }
+    else {
+      this.activee = 1;
+      message = 'Are you sure you want to business this product?';
+    }
     const confirmation = window
-      .confirm('Are you sure you want to delete this product?');
+      .confirm(`${message}`);
     if (confirmation) {
       debugger
-      this.productService.deleteProduct(productId).subscribe({
+      this.productService.deleteProduct(productId, this.activee).subscribe({
         next: (response: any) => {
           debugger
-          alert('Xóa thành công')
+          alert(response.message)
           // location.reload();
           this.ngOnInit();
         },

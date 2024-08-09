@@ -64,9 +64,9 @@ export class ProductService {
     return this.http.put<Product>(`${this.apiGetProducts}/update/${productId}`, updatedProduct);
   }
 
-  deleteProduct(productId: number): Observable<string> {
+  deleteProduct(productId: number, active: number): Observable<string> {
     debugger
-    return this.http.delete<string>(`${this.apiGetProducts}/delete/${productId}`);
+    return this.http.delete<string>(`${this.apiGetProducts}/delete/${productId}/${active}`);
   }
-
+  
 }

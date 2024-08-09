@@ -63,9 +63,20 @@
         <td><button type="button" class="btn btn-outline-warning"
             (click)="updateProduct(product.id)">Cập
             nhật</button></td>
-        <td><button type="button"
+        <td>
+          @if (product.active) {
+          <button type="button"
             class="btn btn-outline-danger"
-            (click)="deleteProduct(product.id)">Xoá</button></td>
+            (click)="deleteProduct(product.id, product.active)">Ngừng kinh
+            doanh</button>
+          }
+          @else {
+          <button type="button"
+            class="btn btn-outline-danger"
+            (click)="deleteProduct(product.id, product.active)">Kinh
+            doanh</button>
+          }
+        </td>
       </tr>
       }
     </tbody>

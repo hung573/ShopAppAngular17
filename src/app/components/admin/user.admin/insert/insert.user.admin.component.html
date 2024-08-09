@@ -26,9 +26,17 @@
 
         <div class="form-group mb-3">
           <label for="password">Mật khẩu:</label>
-          <input type="password" id="password"
-            name="password" class="form-control"
-            [(ngModel)]="insertUserDTO.password" required>
+          <div class="password-wrapper">
+            <input type="password" id="password"
+              name="password" class="form-control"
+              [(ngModel)]="insertUserDTO.password"
+              type="{{ passwordFieldType ? 'text' : 'password' }}"
+              placeholder="Mật khẩu phải trên 5 ký tự" required>
+            <i class="password-toggle fas"
+              [ngClass]="passwordFieldType ?'fa-eye' : 'fa-eye-slash'"
+              (click)="togglePasswordVisibility()"></i>
+          </div>
+
         </div>
 
         <div class="form-group mb-3">

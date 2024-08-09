@@ -5,6 +5,7 @@ import {
 } from 'class-validator';
 
 export class UserAdminUpdateDTO {
+
   fullname: string;
 
   address: string;

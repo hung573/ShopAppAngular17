@@ -8,21 +8,48 @@
           <input type="text" id="full-name"
             name="fullname" class="form-control"
             [(ngModel)]="updateUserDTO.fullname" required>
+          @if (isFullNameInvalid()) {
+          <p class="text-danger">
+            Họ và tên không được để tróng
+          </p>
+          }
         </div>
 
         <div class="form-group mb-3">
           <label for="address">Địa chỉ:</label>
           <textarea id="address"
             name="address" class="form-control"
-            [(ngModel)]="updateUserDTO.address" required></textarea>
+            [(ngModel)]="updateUserDTO.address"
+            required></textarea>
+          @if (isAddRessInvalid()) {
+          <p class="text-danger">
+            Địa chỉ không được để tróng
+          </p>
+          }
         </div>
 
         <div class="form-group mb-3">
-          <label for="password">Mật khẩu:</label>
-          <input type="password" id="password"
-            name="password" class="form-control"
-            [(ngModel)]="updateUserDTO.password"
-            required>
+          <label for="password" style="color: red;">Mật khẩu(*):</label>
+          <div class="password-wrapper">
+            <input type="password" id="password"
+              name="password" class="form-control"
+              [(ngModel)]="updateUserDTO.password"
+              type="{{ passwordFieldType ? 'text' : 'password' }}"
+              required>
+            <i class="password-toggle fas"
+              [ngClass]="passwordFieldType ?'fa-eye' : 'fa-eye-slash'"
+              (click)="togglePasswordVisibility()"></i>
+          </div>
+          @if (isPasswordInvalid()) {
+          <p class="text-danger">Mật khẩu
+            phải có ít nhất 6 ký tự
+          </p>
+          }
+          @if (isKhoangTrang()) {
+          <p class="text-danger">Mật khẩu
+            không được chứa dấu khoảng trắng
+          </p>
+          }
         </div>
 
         <div class="form-group mb-3">

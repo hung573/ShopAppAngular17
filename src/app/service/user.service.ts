@@ -73,6 +73,11 @@ export class UserService {
     return this.http.put<UserAdminUpdateDTO>(`${this.apiUrlUser}/admin/update/${userId}`, updateUser);
   }
 
+  deleteUserAdmin(userId: number, active: number) {
+    debugger
+    return this.http.delete(`${this.apiUrlUser}/delete/${userId}/${active}`);
+  }
+
   saveUserToLocalStorage(userResponse?: UserResponse) {
     try {
       debugger;

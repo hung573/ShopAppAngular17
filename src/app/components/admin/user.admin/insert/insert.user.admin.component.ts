@@ -2,7 +2,7 @@ import { Router } from '@angular/router';
 import { UserService } from './../../../../service/user.service';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, Validators } from '@angular/forms';
 import { RegisterDTO } from '../../../../dtos/user/register.dto';
 
 @Component({
@@ -28,6 +28,8 @@ export class InsertUserAdminComponent {
     google_account_id: 0
   }
 
+  passwordFieldType: boolean = false;
+
   constructor(
     private userService: UserService,
     private router: Router
@@ -48,6 +50,10 @@ export class InsertUserAdminComponent {
         console.log(error.message);
       }
     })
+  }
+
+  togglePasswordVisibility() {
+    this.passwordFieldType = !this.passwordFieldType;
   }
 
 }

@@ -24,6 +24,7 @@ export class UserAdminComponent implements OnInit {
   totalPages: number = 0;
   visiblePages: number[] = [];
   keyword: string = "";
+  activee: number = 0;
 
   constructor(
     private userService: UserService,
@@ -89,6 +90,35 @@ export class UserAdminComponent implements OnInit {
   }
   updateUser(userId: number) {
     this.router.navigate([`admin/user/update`, userId]);
+  }
+  deleteUser(userId: number, active: boolean) {
+    let message: String
+    if (active) {
+      this.activee = 0;
+      message = 'Are you sure you want to delete this account?';
+    }
+    else {
+      this.activee = 1;
+      message = 'Are you sure you want to enable this account?';
+    }
+    const confirmation = window
+      .confirm(`${message}`);
+    if (confirmation) {
+      this.userService.deleteUserAdmin(userId, this.activee).subscribe({
+        next: (reponse: any) => {
+          debugger
+          alert(`${reponse.message}`)
+          // location.reload();
+          this.ngOnInit();
+        },
+        error: (error: any) => {
+          debugger;
+          alert(error.message)
+          console.error('Error fetching products:', error.message);
+        }
+      })
+    }
+
   }
 
 }
