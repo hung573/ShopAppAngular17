@@ -1,5 +1,6 @@
 @import '../../styles/shared-style.scss';
 
+
 .intro-section {
   color: white;
   padding: 20px;
@@ -130,5 +131,48 @@
   &:hover {
     background-color: rgba(0, 0, 0, 0.8);
   }
+}
+
+
+.question-box {
+  border-radius: 10px;
+  padding: 15px;
+  background-color: #f8f9fa;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.question-header h6 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.reply-btn {
+  color: red;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.admin-badge {
+  background-color: red;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 15px;
+  font-size: 0.8rem;
+}
+
+.comment-time {
+  font-size: 0.8rem;
+  color: #6c757d;
+}
+
+.comment-text {
+  margin: 0;
+  font-size: 1rem;
 }
 

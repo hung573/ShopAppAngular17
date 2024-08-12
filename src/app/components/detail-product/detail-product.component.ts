@@ -1,3 +1,4 @@
+import { UserService } from './../../service/user.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../enviroments/environment';
@@ -8,6 +9,11 @@ import { ProductService } from '../../service/product.service';
 
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from '../footer/footer.component';
+import { CommentService } from '../../service/comment.service';
+import { Comment } from '../../models/comment';
+import { CommentResponse } from '../../reponses/comment.response';
+import { CommentDTO } from '../../dtos/comment.dto';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-detail-product',
@@ -16,13 +22,21 @@ import { FooterComponent } from '../footer/footer.component';
   standalone: true,
   imports: [
     CommonModule,
-    FooterComponent
+    FooterComponent,
+    FormsModule
   ]
 })
 export class DetailProductComponent implements OnInit {
 
   product?: Product;
+  comments: CommentResponse[] = [];
+  commentData: CommentDTO = {
+    product_id: 0,
+    user_id: 0,
+    content: '',
+  }
   productId: number = 0;
+  userId: number = 0;
   currentImageIndex: number = 0;
   quantity: number = 1;
 
@@ -30,24 +44,31 @@ export class DetailProductComponent implements OnInit {
     private productService: ProductService,
     private cartService: CartService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
-
+    private router: Router,
+    private commentService: CommentService,
+    private userService: UserService
 
   ) { }
 
   ngOnInit(): void {
-    this.Test();
-  }
-
-  Test(): void {
-    // Lấy productId từ URL
     const idParam = this.activatedRoute.snapshot.paramMap.get('id');
-    debugger
-    // this.cartService.clearCart();
-    // const idParam = 2 //fake tạm 1 giá trị
+    const userLocal = this.userService.getUserToLocalStorage();
     if (idParam !== null) {
       this.productId = +idParam;
     }
+    if (userLocal !== null) {
+      this.userId = +userLocal.id;
+    }
+    this.commentData = {
+      product_id: this.productId,
+      user_id: this.userId,
+      content: '',
+    }
+    this.Test();
+    this.ShowComment();
+  }
+
+  Test(): void {
     if (!isNaN(this.productId)) {
       this.productService.getDetailProduct(this.productId).subscribe({
         next: (response: any) => {
@@ -76,7 +97,29 @@ export class DetailProductComponent implements OnInit {
         }
       });
     } else {
-      console.error('Invalid productId:', idParam);
+      console.error('Invalid productId:');
+    }
+  }
+
+  ShowComment(): void {
+
+    if (!isNaN(this.productId)) {
+      this.commentService.getCommentByProductId(this.productId, 1, 10).subscribe({
+        next: (response: any) => {
+          debugger
+          this.comments = response.items;
+          // Bắt đầu với ảnh đầu tiên
+        },
+        complete: () => {
+          debugger;
+        },
+        error: (error: any) => {
+          debugger;
+          console.error('Error fetching detail:', error);
+        }
+      });
+    } else {
+      console.error('Invalid productId:');
     }
   }
 
@@ -131,6 +174,25 @@ export class DetailProductComponent implements OnInit {
 
   buyNow(): void {
     this.router.navigate(['/orders']);
+  }
+
+  addComment() {
+    if (!isNaN(this.productId) && !isNaN(this.userId)) {
+      this.commentService.addComment(this.commentData).subscribe({
+        next: (response: any) => {
+          this.ngOnInit();
+        },
+        complete: () => {
+        },
+        error: (error: any) => {
+          alert(error.message)
+        }
+      });
+    }
+    else {
+      console.error('Invalid productId:');
+      console.error('Invalid userId:');
+    }
   }
 
 }
