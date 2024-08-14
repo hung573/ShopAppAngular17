@@ -14,6 +14,7 @@ import { OrderAdminComponent } from './components/admin/order.admin/order.admin.
 import { ProductAdminComponent } from './components/admin/product.admin/product.admin.component';
 import { CategoryAdminComponent } from './components/admin/category.admin/category.admin.component';
 import { CategoryDetailAdminComponent } from './components/admin/category-detail.admin/category-detail.admin.component';
+import { OrderPurchaseComponent } from './components/order-purchase/order-purchase.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -24,6 +25,8 @@ export const routes: Routes = [
   { path: 'orders', component: OrderComponent, canActivate: [AuthGuardFn] },
   { path: 'smember', component: UserProfileComponent, canActivate: [AuthGuardFn] },
   { path: 'orders/:id', component: OrderDetailComponent },
+  { path: 'orders-purchase/:id', component: OrderPurchaseComponent, canActivate: [AuthGuardFn] },
+
 
   //Admin
   {

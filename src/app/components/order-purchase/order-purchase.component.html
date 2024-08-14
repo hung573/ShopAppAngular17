@@ -1,0 +1,84 @@
+<div class="container">
+  @for(order of orderResponse; track order.id){
+  <div class="order-summary">
+    <div class="store-info">
+      <span class="mall-icon">Mall</span>
+      <span class="store-name">Havit Flagship Store</span>
+      <button class="chat-btn">Chat</button>
+      <button class="view-store-btn">Xem Shop</button>
+    </div>
+    @for(order_detail of order.order_details; track order_detail.id){
+    <div class="product-item">
+      <div class="product-image">
+        <img
+          src="http://localhost:8088/api/v1/products/images/{{order_detail.product.thumbnail}}"
+          alt="Tai nghe Bluetooth Havit">
+      </div>
+
+      <div class="product-details">
+        <div class="product-name">
+          {{order_detail.product.name}}
+        </div>
+        <div class="product-variant">Phân loại hàng:
+          {{order_detail.color}}</div>
+        <div class="product-quantity">x{{order_detail.number_of_products}}</div>
+        <div class="product-actions">
+          <span class="return-policy">15 ngày trả hàng</span>
+          <span class="free-return">Trả hàng miễn phí 15 ngày</span>
+        </div>
+        <div class="product-price">
+          <span class="old-price"> {{order_detail.product.price | number}}
+            VND</span>
+          <span class="current-price">{{order_detail.total_money | number}}
+            VND</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="product-item gift-item">
+      <div class="product-image">
+        <img src="gift-bag-image-url.jpg" alt="Túi dây rút chống nước Havit">
+      </div>
+      <div class="product-details">
+        <div class="gift-label">Quà Tặng</div>
+        <div class="product-name">Túi dây rút chống nước cho tai nghe Havit
+          7x11cm</div>
+        <div class="product-quantity">x1</div>
+        <div class="product-actions">
+          <span class="return-policy">15 ngày trả hàng</span>
+          <span class="free-return">Trả hàng miễn phí 15 ngày</span>
+        </div>
+        <div class="product-price">
+          <span class="old-price">₫50.000</span>
+          <span class="current-price">₫0</span>
+        </div>
+      </div>
+    </div> -->
+    }
+    <div class="total-amount">
+      <span class="total-label">Thành tiền:</span>
+      <span class="total-price">{{order.total_money | number}} VND</span>
+    </div>
+    <div class="review-section">
+      @if (order.status === 'delivered') {
+      <div class="review-deadline">Đánh giá sản phẩm trước
+        <span>02-09-2024</span></div>
+      <a href="#" class="review-link">Đánh giá ngay và nhận 200 Xu</a>
+      }
+      @else {
+      <div class="review-deadline">Tình trạng
+        <span>{{order.status}}</span></div>
+      <a href="#" class="review-link">Đánh giá ngay và nhận 200 Xu</a>
+      }
+
+    </div>
+
+    <div class="actions">
+      <button class="review-btn">Đánh Giá</button>
+      <button class="return-btn">Yêu Cầu Trả Hàng/Hoàn Tiền</button>
+      <button class="more-btn">Thêm</button>
+    </div>
+  </div>
+  }
+
+</div>

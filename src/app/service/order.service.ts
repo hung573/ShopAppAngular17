@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { OrderDTO } from '../dtos/order/order.dto';
 import { environment } from '../enviroments/environment';
 import { Order } from '../models/order';
+import { OrderResponse } from '../reponses/order/order.response';
 
 @Injectable({
   providedIn: 'root',
@@ -31,6 +32,12 @@ export class OrderService {
       .set('limit', limit.toString());
     return this.http.get<Order[]>(`${this.apiUrl}/get-order-by-keyword`, { params });
   }
+
+  getAllOrdersByUser(userId: number): Observable<OrderResponse[]> {
+    debugger;
+    return this.http.get<OrderResponse[]>(`${this.apiUrl}/user_order/${userId}`);
+  }
+
   UpdateOrder(orderDTO: OrderDTO, orderId: number): Observable<any> {
     return this.http.put(`${this.apiUrl}/update/${orderId}`, orderDTO);
   }
@@ -38,6 +45,7 @@ export class OrderService {
   DeleteOrder(orderId: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/delete/${orderId}`);
   }
+
   convertToISODate(dateString: string, timeZone: string): string {
     const date = new Date(dateString);
     const dateStringInTimeZone = date.toLocaleString('en-GB', {
@@ -50,4 +58,7 @@ export class OrderService {
     const [day, month, year] = dateStringInTimeZone.split('/');
     return `${year}-${month}-${day}`;
   }
+
+
+
 }

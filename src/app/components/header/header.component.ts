@@ -23,6 +23,7 @@ export class HeaderComponent implements OnInit {
   userResponse?: UserResponse | null;
   isPopoverOpen = false;
   activeNavItem: number = 0;
+  userId: number = 0;
   constructor(
     private userService: UserService,
     private popoverConfig: NgbPopoverConfig,
@@ -32,6 +33,10 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    const userLocal = this.userService.getUserToLocalStorage();
+    if (userLocal !== null) {
+      this.userId = +userLocal.id;
+    }
     this.userResponse = this.userService.getUserToLocalStorage();
   }
 
@@ -47,7 +52,7 @@ export class HeaderComponent implements OnInit {
       this.router.navigate(['/smember']);
     }
     else if (index === 1) {
-      alert(index);
+      this.router.navigate([`/orders-purchase/${this.userId}`]);
     }
     else if (index === 2) {
       this.userService.removeUserToLocalStorage();
