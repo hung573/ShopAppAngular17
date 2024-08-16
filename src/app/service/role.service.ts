@@ -7,11 +7,17 @@ import { Observable } from "rxjs";
   providedIn: 'root'
 })
 
-export class RoleService{
-  private apiGetRoles  = `${environment.apiBaseUrl}/roles/login`;
+export class RoleService {
+  private apiGetRoles = `${environment.apiBaseUrl}/roles`;
 
   constructor(private http: HttpClient) { }
-  getRoles():Observable<any> {
-    return this.http.get<any[]>(this.apiGetRoles);
+
+  getRoles(): Observable<any> {
+    return this.http.get<any[]>(`${this.apiGetRoles}/login`);
   }
+
+  removeRole(roleId: number, active: number): Observable<String> {
+    return this.http.delete<string>(`${this.apiGetRoles}/delete/${roleId}/${active}`);
+  }
+
 }

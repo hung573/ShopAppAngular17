@@ -1,0 +1,96 @@
+<div class="container-fluid">
+  <div class="row mb-3" style="padding-top: 20px;">
+    <div class="col-md-4">
+      <input type="text" class="form-control search-input"
+        placeholder="Tìm sản phẩm" [(ngModel)]="keyword" name="keyword">
+    </div>
+    <div class="col-md-2">
+      <select class="form-control product-category"
+        [(ngModel)]="selectedProductId" name="product_name">
+        <option [value]="0">Tất cả</option>
+        @for (product of products; track product.id) {
+        <option [value]="product.id">
+          {{ product.name }}
+        </option>
+        }
+        @empty {
+        <option>
+          No categories
+        </option>
+        }
+      </select>
+    </div>
+    <div class="col-md-4">
+      <button class="btn btn-primary">Tìm
+        kiếm</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8 ">
+      <button type="button" class="btn btn-success"
+        style="margin-top:20px ;">Thêm mới</button>
+    </div>
+  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">ID sản phẩm</th>
+        <th scope="col">ID khách hàng</th>
+        <th scope="col">Tên khách hàng</th>
+        <th scope="col">Content</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (comment of comments; track comment.id) {
+      <tr>
+        <th>{{comment.id}}</th>
+        <td>{{comment.product_id}}</td>
+        <td>{{comment.user.id}}</td>
+        <td>{{comment.user.fullname}}</td>
+        <td>{{comment.content}}</td>
+      </tr>
+      }
+    </tbody>
+  </table>
+  <div class="d-flex justify-content-center">
+    <nav aria-label="Page navigation">
+      <ul class="pagination">
+        @if (currentPage > 1) {
+        <li class="page-item">
+          <a class="page-link"
+            (click)="onPageChange(1)">First</a>
+        </li>
+        }
+        @if (currentPage > 1) {
+        <li class="page-item">
+          <a class="page-link"
+            (click)="onPageChange(currentPage - 1)">Previous</a>
+        </li>
+        }
+        @for (page of visiblePages; track page) {
+        <ng-container>
+          <li class="page-item" [ngClass]="{'active': page === currentPage}">
+            <a class="page-link"
+              (click)="onPageChange(page)">
+              {{page}}
+            </a>
+          </li>
+        </ng-container>
+        }
+        @if (currentPage < totalPages) {
+        <li class="page-item">
+          <a class="page-link"
+            (click)="onPageChange(currentPage + 1)">Next</a>
+        </li>
+        }
+        @if (currentPage < totalPages) {
+        <li class="page-item">
+          <a class="page-link"
+            (click)="onPageChange(totalPages)">Last</a>
+        </li>
+        }
+      </ul>
+    </nav>
+  </div>
+</div>

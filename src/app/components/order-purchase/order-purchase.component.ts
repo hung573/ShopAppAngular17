@@ -4,12 +4,14 @@ import { UserService } from '../../service/user.service';
 import { OrderResponse } from '../../reponses/order/order.response';
 import { environment } from '../../enviroments/environment';
 import { CommonModule } from '@angular/common';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-order-purchase',
   standalone: true,
   imports: [
-    CommonModule
+    CommonModule,
+    FooterComponent,
   ],
   templateUrl: './order-purchase.component.html',
   styleUrl: './order-purchase.component.scss'

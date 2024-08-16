@@ -5,6 +5,7 @@ import { CommentResponse } from "../reponses/comment.response";
 import { Comment } from "../models/comment";
 import { Observable } from "rxjs";
 import { CommentDTO } from "../dtos/comment.dto";
+import { CommentAdminResponse } from "../reponses/comment.admin.response";
 
 @Injectable({
   providedIn: 'root'
@@ -25,5 +26,15 @@ export class CommentService {
 
   addComment(commentDTO: CommentDTO): Observable<any> {
     return this.http.post(`${this.apiGetComments}/add`, commentDTO);
+  }
+
+  getCommentAdmin(keyword: string, productId: number, page: number, limit: number): Observable<CommentAdminResponse[]> {
+    debugger
+    const params = new HttpParams()
+      .set('keyword', keyword.toString())
+      .set('product_id', productId.toString())
+      .set('page', page.toString())
+      .set('limit', limit.toString());
+    return this.http.get<CommentAdminResponse[]>(`${this.apiGetComments}/admin`, { params });
   }
 }

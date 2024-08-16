@@ -13,6 +13,7 @@ import { UpdateProductAdminComponent } from "./product.admin/update/update.produ
 import { UserAdminComponent } from "./user.admin/user.admin.component";
 import { InsertUserAdminComponent } from "./user.admin/insert/insert.user.admin.component";
 import { UpdateUserAdminComponent } from "./user.admin/update/update.user.admin.component";
+import { RoleAdminComponent } from "./role.admin/role.admin.component";
 
 export const adminRoutes: Routes = [
   {
@@ -35,6 +36,8 @@ export const adminRoutes: Routes = [
       { path: 'users', component: UserAdminComponent },
       { path: 'user/insert', component: InsertUserAdminComponent },
       { path: 'user/update/:id', component: UpdateUserAdminComponent },
+
+      { path: 'roles', component: RoleAdminComponent },
 
     ]
   },

@@ -1,1 +1,43 @@
-<p>role.admin works!</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-8 ">
+      <button type="button" class="btn btn-success" style="margin-top:20px ;"
+        (click)="insertRole()">Thêm mới</button>
+    </div>
+  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Role</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (role of roles; track role.id) {
+      <tr>
+        <th>{{role.id}}</th>
+        <td>{{role.name}}</td>
+        <td><button type="button" class="btn btn-outline-warning"
+            (click)="updateRole(role.id)">Cập
+            nhật</button></td>
+        <td>
+          @if (role.active) {
+          <button type="button"
+            class="btn btn-outline-danger"
+            (click)="deleteRole(role.id, role.active)">Xoá
+          </button>
+          }
+          @else {
+          <button type="button"
+            class="btn btn-outline-danger"
+            (click)="deleteRole(role.id, role.active)">Khôi phục
+          </button>
+          }
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
