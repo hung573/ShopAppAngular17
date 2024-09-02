@@ -118,8 +118,19 @@
       <div class="mt-3">
         <h4 class="product-header">Nhập coupon</h4>
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Nhập coupon">
-          <button class="btn btn-gradient" type="button">Áp dụng</button>
+          <!-- <input type="text" class="form-control" placeholder="Nhập coupon"> -->
+          <select class="form-control" id="couponId"
+            formControlName="coupon_id"
+            name="coupon_id">
+            <option value>Hãy chọn Coupon</option>
+            @for (coupon of couponResponse; track coupon.id) {
+            <option [value]="coupon.id">
+              {{ coupon.code }}
+            </option>
+            }
+          </select>
+          <button class="btn btn-gradient"
+            (click)="apllyCoupon()">Áp dụng</button>
         </div>
       </div>
       <div class="col-md-12">

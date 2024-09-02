@@ -68,5 +68,5 @@ export class ProductService {
     debugger
     return this.http.delete<string>(`${this.apiGetProducts}/delete/${productId}/${active}`);
   }
-  
+
 }

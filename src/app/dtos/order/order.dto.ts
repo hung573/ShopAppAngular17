@@ -31,7 +31,7 @@ export class OrderDTO {
 
   payment_method: string;
 
-  coupon_code: string;
+  coupon_id: number;
 
   cart_items: { product_id: number, quantity: number }[]; // Thêm cart_items để lưu thông tin giỏ hàng
 
@@ -49,7 +49,7 @@ export class OrderDTO {
     this.shipping_address = data.shipping_address;
     this.shipping_date = data.shipping_date;
     this.payment_method = data.payment_method;
-    this.coupon_code = data.coupon_code;
+    this.coupon_id = data.coupon_id;
     this.cart_items = data.cart_items;
   }
 }

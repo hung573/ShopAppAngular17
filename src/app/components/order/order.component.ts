@@ -1,3 +1,4 @@
+import { CouponResponse } from './../../reponses/coupon/coupon.response';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -15,6 +16,9 @@ import { UserService } from '../../service/user.service';
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from '../footer/footer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CouponConditionResponse } from '../../reponses/coupon/couponCondition.response';
+import { CouponService } from '../../service/coupon.service';
+import { error } from 'console';
 
 @Component({
   selector: 'app-order',
@@ -32,7 +36,6 @@ export class OrderComponent implements OnInit {
   orderForm: FormGroup; // Đối tượng FormGroup để quản lý dữ liệu của form
   cartItems: { product: Product, quantity: number }[] = [];
   userResponse?: UserResponse | null;
-  couponCode: string = ''; // Mã giảm giá
   totalAmount: number = 0; // Tổng tiền
   orderData: OrderDTO = {
     user_id: 0, // Thay bằng user_id thích hợp
@@ -47,9 +50,12 @@ export class OrderComponent implements OnInit {
     payment_method: 'cod', // Mặc định là thanh toán khi nhận hàng (COD)
     shipping_method: 'express', // Mặc định là vận chuyển nhanh (Express)
     shipping_address: '',// Dia chi giao den
-    coupon_code: '', // Sẽ được điền từ form khi áp dụng mã giảm giá
+    coupon_id: 0, // Sẽ được điền từ form khi áp dụng mã giảm giá
     cart_items: []
   };
+  couponConditionResponse: CouponConditionResponse[] = [];
+  couponResponse: CouponResponse[] = [];
+  couponCode: string = ''; // Mã giảm giá
   token: string;
 
   constructor(
@@ -60,6 +66,7 @@ export class OrderComponent implements OnInit {
     private router: Router,
     private tokenService: TokenService,
     private userService: UserService,
+    private couponService: CouponService
 
   ) {
     // Tạo FormGroup và các FormControl tương ứng
@@ -70,9 +77,17 @@ export class OrderComponent implements OnInit {
       note: [''],
       shipping_method: ['express'],
       shipping_address: ['', [Validators.required, Validators.minLength(5)]], // address bắt buộc và ít nhất 5 ký tự
-      payment_method: ['cod']
+      payment_method: ['cod'],
+      coupon_id: ['']
     });
     this.token = '';
+    // Convert the coupon_code to a number whenever its value changes
+    this.orderForm.get('coupon_id')?.valueChanges.subscribe(value => {
+      const numericValue = Number(value);
+      if (!isNaN(numericValue)) {
+        this.orderForm.get('coupon_id')?.setValue(numericValue, { emitEvent: false });
+      }
+    });
 
   }
 
@@ -159,6 +174,18 @@ export class OrderComponent implements OnInit {
         console.error('Error fetching detail:', error);
       }
     });
+
+    this.couponService.getAllCoupon().subscribe({
+      next: (response: any) => {
+        this.couponResponse = response.items;
+      },
+      complete: () => {
+
+      },
+      error: (error: any) => {
+
+      }
+    });
   }
   placeOrder() {
     if (this.orderForm.valid) {
@@ -176,8 +203,10 @@ export class OrderComponent implements OnInit {
       this.orderData = {
         ...this.orderData,
         ...this.orderForm.value,
+        // coupon_id: this.coupon_idd,
         address: this.userResponse?.address
       };
+      debugger;
       this.orderData.cart_items = this.cartItems.map(cartItem => ({
         product_id: cartItem.product.id,
         quantity: cartItem.quantity
@@ -215,12 +244,6 @@ export class OrderComponent implements OnInit {
     this.orderData.total_money = this.totalAmount;
   }
 
-  // Hàm xử lý việc áp dụng mã giảm giá
-  applyCoupon(): void {
-    // Viết mã xử lý áp dụng mã giảm giá ở đây
-    // Cập nhật giá trị totalAmount dựa trên mã giảm giá nếu áp dụng
-  }
-
   onProductClick(productId: number) {
     debugger
     this.router.navigate(['/products', productId]);
@@ -241,6 +264,34 @@ export class OrderComponent implements OnInit {
     if (this.cartService.checkQuantity(productID)) {
       alert('Số lượng sản phẩm đã giảm đến mức tối thiểu')
     }
+  }
+
+  apllyCoupon() {
+    this.orderData = {
+      ...this.orderForm.value
+    }
+    this.couponService.getCouponId(this.orderData.coupon_id).subscribe({
+      next: (response: any) => {
+        this.couponCode = response.items.code;
+
+        this.couponService.ApllyCoupon(this.couponCode, this.totalAmount).subscribe({
+          next: (responseApllyCoupon: any) => {
+            debugger;
+            this.totalAmount = responseApllyCoupon.items;
+            this.orderData.total_money = responseApllyCoupon.items;
+            debugger;
+          },
+          error: (error: any) => {
+            alert("Lỗi không tính TotalAmount lại được");
+            console.log(error.message);
+          }
+        });
+      },
+      error: (error: any) => {
+        alert("Lỗi khi chọn Coupon. Mời bạn thử lại.");
+        console.log(error.message);
+      }
+    });
   }
 
 }

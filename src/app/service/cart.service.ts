@@ -99,7 +99,7 @@ export class CartService {
 
   // Hàm xóa dữ liệu giỏ hàng và cập nhật Local Storage
   clearCart(): void {
-    // this.cart.clear(); // Xóa toàn bộ dữ liệu trong giỏ hàng
+    this.cart.clear(); // Xóa toàn bộ dữ liệu trong giỏ hàng
     // this.saveCartToLocalStorage(); // Lưu giỏ hàng mới vào Local Storage (trống)
     // localStorage.clear();
   }
