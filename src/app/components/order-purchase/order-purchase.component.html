@@ -3,7 +3,8 @@
   <div class="order-summary">
     <div class="store-info">
       <span class="mall-icon">Mall</span>
-      <span class="store-name">Havit Flagship Store</span>
+      <span class="store-name">Ngày giao dự kiến:
+        {{order.shipping_date|date}}</span>
       <button class="chat-btn">Chat</button>
       <button class="view-store-btn">Xem Shop</button>
     </div>
@@ -61,8 +62,9 @@
     </div>
     <div class="review-section">
       @if (order.status === 'delivered') {
-      <div class="review-deadline">Đánh giá sản phẩm trước
-        <span>02-09-2024</span></div>
+      <div class="review-deadline">Tình trạng:
+        <span>{{order.status}}</span></div>
+
       <a href="#" class="review-link">Đánh giá ngay và nhận 200 Xu</a>
       }
       @else {

@@ -100,7 +100,6 @@ export class OrderComponent implements OnInit {
     const cart = this.cartService.getCart();
     const productIds = Array.from(cart.keys()); // Chuyển danh sách ID từ Map giỏ hàng
 
-
     // Goi service để lấy thông tin khách hàng
     debugger
     this.token = this.tokenService.getToken() ?? '';
@@ -186,6 +185,7 @@ export class OrderComponent implements OnInit {
 
       }
     });
+
   }
   placeOrder() {
     if (this.orderForm.valid) {
@@ -204,6 +204,7 @@ export class OrderComponent implements OnInit {
         ...this.orderData,
         ...this.orderForm.value,
         // coupon_id: this.coupon_idd,
+        user_id: this.tokenService.getUserId(),
         address: this.userResponse?.address
       };
       debugger;

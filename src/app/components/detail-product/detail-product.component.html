@@ -92,7 +92,12 @@
 
           <div class="question-box">
             <div class="question-header">
+              @if (userId === comment.user.id) {
+              <h6 class="mb-0"><strong>Tôi</strong></h6>
+              }
+              @else {
               <h6 class="mb-0"><strong>{{comment.user.fullname}}</strong></h6>
+              }
               <span class="comment-time">{{comment.createdAt | date}}</span>
             </div>
             <p class="comment-text">{{comment.content}}</p>

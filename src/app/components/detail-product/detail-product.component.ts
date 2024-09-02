@@ -129,9 +129,10 @@ export class DetailProductComponent implements OnInit {
       this.product.product_images.length > 0) {
       // Đảm bảo index nằm trong khoảng hợp lệ
       if (index < 0) {
-        index = 0;
-      } else if (index >= this.product.product_images.length) {
         index = this.product.product_images.length - 1;
+      }
+      else if (index >= this.product.product_images.length) {
+        index = 0;
       }
       // Gán index hiện tại và cập nhật ảnh hiển thị
       this.currentImageIndex = index;

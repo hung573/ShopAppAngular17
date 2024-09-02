@@ -27,6 +27,7 @@ export class OrderDetailComponent implements OnInit {
   orderResponse: OrderResponse = {
     id: 0, // Hoặc bất kỳ giá trị số nào bạn muốn
     user_id: 0,
+    coupon_id: 0,
     fullname: '',
     phone_number: '',
     email: '',

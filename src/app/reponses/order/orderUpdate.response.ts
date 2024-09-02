@@ -1,9 +1,8 @@
 import { OrderDetail } from "../../models/order.detail";
 
-export interface OrderResponse {
+export interface OrderUpdateResponse {
   id: number;
   user_id: number;
-  coupon_id: number;
   fullname: string;
   email: string;
   phone_number: string;

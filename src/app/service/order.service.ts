@@ -6,6 +6,7 @@ import { OrderDTO } from '../dtos/order/order.dto';
 import { environment } from '../enviroments/environment';
 import { Order } from '../models/order';
 import { OrderResponse } from '../reponses/order/order.response';
+import { OrderUpdateDTO } from '../dtos/order/orderUpdate.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -38,7 +39,7 @@ export class OrderService {
     return this.http.get<OrderResponse[]>(`${this.apiUrl}/user_order/${userId}`);
   }
 
-  UpdateOrder(orderDTO: OrderDTO, orderId: number): Observable<any> {
+  UpdateOrder(orderDTO: OrderUpdateDTO, orderId: number): Observable<any> {
     return this.http.put(`${this.apiUrl}/update/${orderId}`, orderDTO);
   }
 
