@@ -24,6 +24,7 @@ export class RegisterComponent {
 
   // khai báo biến tương ứng với các trường dữ liệu trong form
   phoneNumber: string;
+  email: string;
   password: string;
   retypePassword: string;
   fullName: string;
@@ -35,6 +36,7 @@ export class RegisterComponent {
 
   constructor(private router: Router, private userService: UserService) {
     this.phoneNumber = '';
+    this.email = '',
     this.password = '';
     this.retypePassword = '';
     this.fullName = '';
@@ -54,6 +56,7 @@ export class RegisterComponent {
     const registerDTO: RegisterDTO = {
       "fullname": this.fullName,
       "phone_number": this.phoneNumber,
+      "email": this.email,
       "address": this.addRess,
       "password": this.password,
       "retype_password": this.retypePassword,

@@ -65,7 +65,7 @@ export class OrderPurchaseComponent implements OnInit {
 
       },
       error: (error: any) => {
-
+        alert('Tài khoản của bạn được đăng nhập từ nơi khác !!!');
       }
     })
   }

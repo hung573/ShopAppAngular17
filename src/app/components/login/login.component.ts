@@ -30,13 +30,17 @@ import { FormsModule } from '@angular/forms';
 export class LoginComponent implements OnInit {
   @ViewChild('loginrForm') loginrForm!: NgForm;
 
-  phoneNumber: string = '';
+  phoneNumber: string | '' = '';
+  email: string | '' = '';
   password: string = '';
   passwordFieldType: boolean = false;
   roles: Role[] = []; // Mảng roles
   rememberMe: boolean = false;
   selectedRole: Role | undefined; // Biến để lưu giá trị được chọn từ dropdown
   userResponse?: UserResponse;
+
+  subject: string = '';
+  contactError: string | null = null;
 
   constructor(
     private router: Router,
@@ -68,71 +72,96 @@ export class LoginComponent implements OnInit {
     //   }
     // });
   }
+  onSubjectChange() {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const phoneRegex = /^[0-9]{6,}$/;
 
+    if (!this.subject) {
+      this.contactError = 'Trường này là bắt buộc';
+      this.email = '';
+      this.phoneNumber = '';
+    } else if (emailRegex.test(this.subject)) {
+      this.contactError = null;
+      this.email = this.subject;
+      this.phoneNumber = '';
+    } else if (phoneRegex.test(this.subject)) {
+      this.contactError = null;
+      this.phoneNumber = this.subject;
+      this.email = '';
+    } else {
+      this.contactError = 'Vui lòng nhập email hoặc số điện thoại hợp lệ';
+      this.email = '';
+      this.phoneNumber = '';
+    }
+  }
 
   login() {
     debugger
-    const loginDTO: LoginDTO = {
-      phone_number: this.phoneNumber,
-      password: this.password,
-      // role_id: this.selectedRole?.id ?? 0
-
-    };
-    debugger
-    this.userService.login(loginDTO).subscribe({
-      next: (response: LoginResponse) => {
-        debugger
-        const { token } = response;
-        if (this.rememberMe) {
-          this.tokenService.setToken(token);
-          this.userService.getUserDetails(token).subscribe({
-            next: (response: any) => {
-              debugger;
-              this.userResponse = {
-                id: response.items.id,
-                fullname: response.items.fullname,
-                phone_number: response.items.phone_number,
-                address: response.items.address,
-                active: response.items.active,
-                dateOfBirth: new Date(response.items.dateOfBirth),
-                role: response.items.role,
-                facebook_account_id: response.items.facebook_account_id,
-                google_account_id: response.items.google_account_id
-              };
-              this.userService.saveUserToLocalStorage(this.userResponse);
-              // this.router.navigate(['/home']);
-              if (this.userResponse.role.id === 1) {
-                this.router.navigateByUrl('/admin', { skipLocationChange: false }).then(() => {
-                  window.location.reload();
-                });
+    this.onSubjectChange();
+    if (this.contactError == null) {
+      const loginDTO: LoginDTO = {
+        phone_number: this.phoneNumber,
+        email: this.email,
+        password: this.password,
+        // role_id: this.selectedRole?.id ?? 0
+      };
+      debugger
+      this.userService.login(loginDTO).subscribe({
+        next: (response: LoginResponse) => {
+          debugger
+          const { token } = response;
+          if (this.rememberMe) {
+            this.tokenService.setToken(token);
+            this.userService.getUserDetails(token).subscribe({
+              next: (response: any) => {
+                debugger;
+                this.userResponse = {
+                  id: response.items.id,
+                  fullname: response.items.fullname,
+                  phone_number: response.items.phone_number,
+                  email: response.items.email,
+                  address: response.items.address,
+                  active: response.items.active,
+                  dateOfBirth: new Date(response.items.dateOfBirth),
+                  role: response.items.role,
+                  facebook_account_id: response.items.facebook_account_id,
+                  google_account_id: response.items.google_account_id
+                };
+                this.userService.saveUserToLocalStorage(this.userResponse);
+                // this.router.navigate(['/home']);
+                if (this.userResponse.role.id === 1) {
+                  this.router.navigateByUrl('/admin', { skipLocationChange: false }).then(() => {
+                    window.location.reload();
+                  });
+                }
+                else {
+                  this.router.navigateByUrl('/home', { skipLocationChange: false }).then(() => {
+                    window.location.reload();
+                  });
+                }
+              },
+              complete: () => {
+                debugger;
+                this.cartService.refreshCart();
+              },
+              error: (error: any) => {
+                debugger;
+                alert(error.message);
               }
-              else {
-                this.router.navigateByUrl('/home', { skipLocationChange: false }).then(() => {
-                  window.location.reload();
-                });
-              }
-            },
-            complete: () => {
-              debugger;
-              this.cartService.refreshCart();
-            },
-            error: (error: any) => {
-              debugger;
-              alert(error.message);
-            }
-          });
+            });
+          }
+          else {
+            alert('Check')
+          }
+        },
+        complete: () => {
+          debugger
+        },
+        error: (error: any) => {
+          alert(error.error.message);
         }
-        else {
-          alert('Check')
-        }
-      },
-      complete: () => {
-        debugger
-      },
-      error: (error: any) => {
-        alert(error.error.message);
-      }
-    })
+      })
+    }
   }
   togglePasswordVisibility() {
     this.passwordFieldType = !this.passwordFieldType;

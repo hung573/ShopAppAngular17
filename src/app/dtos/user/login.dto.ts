@@ -1,12 +1,16 @@
 import {
   IsString,
   IsNotEmpty,
-  IsPhoneNumber
+  IsPhoneNumber,
+  isString
 } from 'class-validator';
 
 export class LoginDTO {
   @IsPhoneNumber()
   phone_number: string;
+
+  @IsString()
+  email: string;
 
   @IsString()
   @IsNotEmpty()
@@ -18,6 +22,7 @@ export class LoginDTO {
   constructor(data: any) {
     this.phone_number = data.phone_number;
     this.password = data.password;
+    this.email = data.email;
     // this.role_id = data.role_id;
   }
 

@@ -33,6 +33,8 @@ export class OrderDTO {
 
   coupon_id: number;
 
+  payment_id: number;
+
   cart_items: { product_id: number, quantity: number }[]; // Thêm cart_items để lưu thông tin giỏ hàng
 
 
@@ -50,6 +52,7 @@ export class OrderDTO {
     this.shipping_date = data.shipping_date;
     this.payment_method = data.payment_method;
     this.coupon_id = data.coupon_id;
+    this.payment_id = data.payment_id;
     this.cart_items = data.cart_items;
   }
 }

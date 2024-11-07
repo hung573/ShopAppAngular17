@@ -105,13 +105,27 @@
             <option value="normal">Thường (Normal)</option>
           </select>
         </div>
-        <div class="mb-3">
+        <!-- <div class="mb-3">
           <label for="paymentMethod" class="form-label">Phương thức thanh
             toán</label>
           <select class="form-control" id="paymentMethod"
             formControlName="payment_method" style="cursor: pointer;">
             <option value="cod">Thanh toán khi nhận hàng (COD)</option>
             <option value="other">Thanh toán khác</option>
+          </select>
+        </div> -->
+        <div class="mb-3">
+          <label for="paymentMethod" class="form-label">Phương thức thanh
+            toán</label>
+          <select class="form-control" id="paymentId"
+            formControlName="payment_id" name="payment_id"
+            style="cursor: pointer;">
+            <option value="0">Hãy chọn Phương thức thanh toán</option>
+            @for (payment of paymentResponse; track payment.id) {
+            <option [value]="payment.id">
+              {{ payment.payment_name }}
+            </option>
+            }
           </select>
         </div>
       </div>
@@ -122,7 +136,7 @@
           <select class="form-control" id="couponId"
             formControlName="coupon_id"
             name="coupon_id">
-            <option value>Hãy chọn Coupon</option>
+            <option value="0">Hãy chọn Coupon</option>
             @for (coupon of couponResponse; track coupon.id) {
             <option [value]="coupon.id">
               {{ coupon.code }}

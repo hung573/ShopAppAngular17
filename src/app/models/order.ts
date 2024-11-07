@@ -18,5 +18,6 @@ export interface Order {
   payment_method: string;
   trackingNumber: string;
   active: boolean;
+  payment_id: number;
   order_details: OrderDetail[];
 }

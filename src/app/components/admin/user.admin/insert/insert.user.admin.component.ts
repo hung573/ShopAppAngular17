@@ -20,6 +20,7 @@ export class InsertUserAdminComponent {
   insertUserDTO: RegisterDTO = {
     fullname: '',
     phone_number: '',
+    email:'',
     address: '',
     password: '',
     retype_password: '',

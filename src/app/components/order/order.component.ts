@@ -19,6 +19,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CouponConditionResponse } from '../../reponses/coupon/couponCondition.response';
 import { CouponService } from '../../service/coupon.service';
 import { error } from 'console';
+import { PaymentService } from '../../service/payment.service';
+import { PaymentResponse } from '../../reponses/payment.response';
 
 @Component({
   selector: 'app-order',
@@ -47,15 +49,18 @@ export class OrderComponent implements OnInit {
     total_money: 0, // Sẽ được tính toán dựa trên giỏ hàng và mã giảm giá
     shipping_date: new Date(),
     status: 'pending',
-    payment_method: 'cod', // Mặc định là thanh toán khi nhận hàng (COD)
+    payment_method: '', // Mặc định là thanh toán khi nhận hàng (COD)
     shipping_method: 'express', // Mặc định là vận chuyển nhanh (Express)
     shipping_address: '',// Dia chi giao den
     coupon_id: 0, // Sẽ được điền từ form khi áp dụng mã giảm giá
+    payment_id: 0,
     cart_items: []
   };
   couponConditionResponse: CouponConditionResponse[] = [];
   couponResponse: CouponResponse[] = [];
+  paymentResponse: PaymentResponse[] = [];
   couponCode: string = ''; // Mã giảm giá
+  paymentName: String = '';
   token: string;
 
   constructor(
@@ -66,7 +71,8 @@ export class OrderComponent implements OnInit {
     private router: Router,
     private tokenService: TokenService,
     private userService: UserService,
-    private couponService: CouponService
+    private couponService: CouponService,
+    private paymentService: PaymentService
 
   ) {
     // Tạo FormGroup và các FormControl tương ứng
@@ -77,8 +83,9 @@ export class OrderComponent implements OnInit {
       note: [''],
       shipping_method: ['express'],
       shipping_address: ['', [Validators.required, Validators.minLength(5)]], // address bắt buộc và ít nhất 5 ký tự
-      payment_method: ['cod'],
-      coupon_id: ['']
+      payment_method: [''],
+      coupon_id: 0,
+      payment_id: 0
     });
     this.token = '';
     // Convert the coupon_code to a number whenever its value changes
@@ -86,6 +93,17 @@ export class OrderComponent implements OnInit {
       const numericValue = Number(value);
       if (!isNaN(numericValue)) {
         this.orderForm.get('coupon_id')?.setValue(numericValue, { emitEvent: false });
+      }
+    });
+    this.orderForm.get('payment_id')?.valueChanges.subscribe(value => {
+      const numericValue = Number(value);
+      if (!isNaN(numericValue)) {
+        this.orderForm.get('payment_id')?.setValue(numericValue, { emitEvent: false });
+        this.paymentService.getPaymentId(numericValue).subscribe({
+          next: (response: any) => {
+            this.orderForm.get('payment_method')?.setValue(response.items.payment_name, { emitEvent: false });
+          },
+        });
       }
     });
 
@@ -177,6 +195,17 @@ export class OrderComponent implements OnInit {
     this.couponService.getAllCoupon().subscribe({
       next: (response: any) => {
         this.couponResponse = response.items;
+      },
+      complete: () => {
+
+      },
+      error: (error: any) => {
+
+      }
+    });
+    this.paymentService.getPayments().subscribe({
+      next: (response: any) => {
+        this.paymentResponse = response.items;
       },
       complete: () => {
 

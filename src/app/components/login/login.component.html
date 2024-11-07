@@ -5,18 +5,18 @@
         <div class="login-form mx-auto">
           <h2 class="login-header">Đăng nhập</h2>
           <div class="form-group">
-            <label for="phoneNumber">Phone</label>
-            <input type="text" class="form-control" id="phoneNumber"
-              name="phoneNumber"
+            <label for="subject">Số điện thoại hoặc Email</label>
+            <input type="text" class="form-control" id="subject"
+              name="subject"
               required
-              [(ngModel)]="phoneNumber"
-              (input)="onPhoneNumberChange()">
+              [(ngModel)]="subject"
+              (input)="onSubjectChange()"
+              #contactInput="ngModel">
             <div class="divider-nospace"></div>
-            @if (phoneNumber.length < 6 && loginrForm.form.touched) {
-            <p class="text-danger">
-              Số điện thoại chưa đúng định dạng
+            <!-- Hiển thị lỗi nếu không hợp lệ -->
+            <p class="text-danger" *ngIf="contactError && contactInput.touched">
+              {{ contactError }}
             </p>
-            }
           </div>
           <div class="mt-5"></div>
           <div class="form-group password-field">
